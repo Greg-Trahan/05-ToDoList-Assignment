@@ -21,7 +21,7 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 
-  let toDoList=[{'hour-9':'Test'},{'hour-10':'Text'},{'hour-11':'Here'}]
+ 
 
   start()
   function start(){
@@ -38,9 +38,8 @@ $(function () {
 
   function displayTime(currentTime){
     const currentDay = $('#currentDay')
-    const currentHour = currentTime.format("h")
+    const currentHour = currentTime.format("H")
     currentDay.text(currentTime.format("MMMM Do YYYY"))
-    currentDay.attr("whattup")
     return currentHour
   }
 
@@ -51,14 +50,31 @@ $(function () {
   function saveWork(){
     const saveButton = $(`.saveBtn`)
     saveButton.on('click', function(){
-      console.log($(this).parents().attr('id'))
-      // toDoList = findIndex($(this).parents())
-      //.val() lets me get a value from a form field
-      console.log(toDoList[2])
-      console.log(toDoList.indexOf($(this).parents().attr('id')))
+      console.log((toDoList.findIndex(item => item.hour === $(this).parents().attr('id'))))
       // localStorage.setItem(JSON.stringify("toDoList"));
     })
   }
+
+  let toDoList=[
+    {'hour': 'hour-9', 'text': 'Test'},
+    {'hour': 'hour-10', 'text': 'text'},
+    {'hour': 'hour-11', 'text': 'Here'}]
+
+
+
+
+
+      //.val() lets me get a value from a form field
+
+
+
+
+
+
+
+
+
+
 
 
 
