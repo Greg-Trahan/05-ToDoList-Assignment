@@ -21,14 +21,13 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 
- 
 
   start()
   function start(){
     currentTime = tellTime()
     currentHour = displayTime(currentTime)
-    // retreiveWork()
-    saveWork()
+    toDoList = retreiveWork()
+    saveWork(toDoList)
   }
 
   function tellTime(){
@@ -44,40 +43,48 @@ $(function () {
   }
 
   function retreiveWork(){
-    var toDoList = JSON.parse(localStorage.getItem("toDoList"));
+    index = 0
+    let toDoList = []
+    var firstToDo = JSON.parse(localStorage.getItem("toDoList"));
+    if (firstToDo === null){
+      firstToDo = []
+      toDoList=[
+        {'hour': 'hour-8', 'text': ''},
+        {'hour': 'hour-9', 'text': ''},
+        {'hour': 'hour-10', 'text': ''},
+        {'hour': 'hour-11', 'text': ''},
+        {'hour': 'hour-12', 'text': ''},
+        {'hour': 'hour-13', 'text': ''},
+        {'hour': 'hour-14', 'text': ''},
+        {'hour': 'hour-15', 'text': ''},
+        {'hour': 'hour-16', 'text': ''},
+        {'hour': 'hour-17', 'text': ''},
+      ]
+    } else {
+      toDoList = firstToDo
+    }
+
+    firstToDo.forEach(function(item, index){
+      
+      $(`#${item.hour}`).children('.description').append(firstToDo[index].text)
+    })
+    return toDoList
+    // firstToDo[index].text //This is the text I want to add
+    // $(`#${item.hour}`).children('.description') // This targets the text area
+    // $('.john').append('Philly') //This is  how I add the text
   }
 
-  function saveWork(){
+  function saveWork(toDoList){
     const saveButton = $(`.saveBtn`)
     saveButton.on('click', function(){
-      console.log((toDoList.findIndex(item => item.hour === $(this).parents().attr('id'))))
-      // localStorage.setItem(JSON.stringify("toDoList"));
+      //Determine the index of the time whos save button was pressed
+      index = (toDoList.findIndex(id => id.hour === $(this).parents().attr('id'))) 
+      //Saves the user text into the correct object
+      toDoList[index].text = $(this).siblings('.description').val()
+      //Submit string into local storage
+      localStorage.setItem("toDoList", JSON.stringify(toDoList))
     })
   }
-
-  let toDoList=[
-    {'hour': 'hour-9', 'text': 'Test'},
-    {'hour': 'hour-10', 'text': 'text'},
-    {'hour': 'hour-11', 'text': 'Here'}]
-
-
-
-
-
-      //.val() lets me get a value from a form field
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
