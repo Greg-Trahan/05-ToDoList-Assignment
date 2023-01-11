@@ -5,7 +5,7 @@ Due: 11JAN2023
 
 Click [here](https://greg-trahan.github.io/05-ToDoList-Assignment/) to see my final project.
 
-![This is a screenshot of the final page](./ScreenGrab.PNG.png)
+![This is a screenshot of the final page](./ScreenGrab.PNG)
 
 ## Description
 The goal of this assignment is create an hour-by-hour calendar of the day that can be updated with tasks to complete throughout the day. The tasks are stored in local storage. The current day is displayed at the top, and the current hour-block is highlighted in red. Future hour-blocks are highlighted in green. 
