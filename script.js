@@ -7,7 +7,7 @@ $(function () {
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
+  // useful when saving the textArea in local storage?
   //
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -60,18 +60,36 @@ $(function () {
         {'hour': 'hour-16', 'text': ''},
         {'hour': 'hour-17', 'text': ''},
       ]
+      
     } else {
       toDoList = firstToDo
     }
 
-    firstToDo.forEach(function(item, index){
+    toDoList.forEach(function(item, index){
+      //Dynamically build HTML tags
+      $('.container-lg').append('<div id="hour-8" class="row time-block"></div>')
       
-      $(`#${item.hour}`).children('.description').append(firstToDo[index].text)
+      $(`#${item.hour}`).append('<div class="col-2 col-md-1 hour text-center py-3"></div>')
+      if (index < 4){
+        $(`#${item.hour}`).children('.hour').append(`${index+8}AM`)
+      } else {
+        $(`#${item.hour}`).children('.hour').append(`${index+8}PM`)
+      }
+      
+      $(`#${item.hour}`).append('<textarea class="col-8 col-md-10 textArea" rows="3"></textarea>')
+      //Add Text
+        // firstToDo[index].text //This is the text I want to add
+        // $(`#${item.hour}`).children('.textArea') // This targets the text area
+        // $('.john').append('Philly') //This is  how I add the text
+      $(`#${item.hour}`).children('.textArea').append(firstToDo[index].text)
+
+      $(`#${item.hour}`).append('<button class="btn saveBtn col-2 col-md-1" aria-label="save">')
+
+      $(`#${item.hour}`).children('.saveBtn').append('<i class="fas fa-save" aria-hidden="true"></i>')
+
     })
     return toDoList
-    // firstToDo[index].text //This is the text I want to add
-    // $(`#${item.hour}`).children('.description') // This targets the text area
-    // $('.john').append('Philly') //This is  how I add the text
+
   }
 
   function saveWork(toDoList){
@@ -80,7 +98,7 @@ $(function () {
       //Determine the index of the time whos save button was pressed
       index = (toDoList.findIndex(id => id.hour === $(this).parents().attr('id'))) 
       //Saves the user text into the correct object
-      toDoList[index].text = $(this).siblings('.description').val()
+      toDoList[index].text = $(this).siblings('.textArea').val()
       //Submit string into local storage
       localStorage.setItem("toDoList", JSON.stringify(toDoList))
     })
@@ -94,7 +112,7 @@ $(function () {
 /* 
 <div id="hour-11" class="row time-block future">
   <div class="col-2 col-md-1 hour text-center py-3">11AM</div>
-  <textarea class="col-8 col-md-10 description" rows="3"> </textarea>
+  <textarea class="col-8 col-md-10 textArea" rows="3"> </textarea>
   <button class="btn saveBtn col-2 col-md-1" aria-label="save">
     <i class="fas fa-save" aria-hidden="true"></i>
   </button>
