@@ -17,7 +17,7 @@ $(function () {
 
   function displayTime(currentTime){
     const currentDay = $('#currentDay')
-    const currentHour = currentTime.format("H")
+    const currentHour = parseInt(currentTime.format("H"))
     currentDay.text(currentTime.format("MMMM Do YYYY"))
     return currentHour
   }
@@ -44,7 +44,7 @@ $(function () {
     toDoList.forEach(function(item, index){
       //Dynamically build HTML tags
       //Create current hour div tag
-      $('.container-lg').append('<div id="hour-8" class="row time-block"></div>')
+      $('.container-lg').append(`<div id="${item.hour}" class="row time-block"></div>`)
       if (index+8 < currentHour){
         $(`#${item.hour}`).addClass(`past`)
       } else if (index+8 === currentHour) {
@@ -55,10 +55,13 @@ $(function () {
 
       //Create display time div tag
       $(`#${item.hour}`).append('<div class="col-2 col-md-1 hour text-center py-3"></div>')
-      if (currentHour < 12){
+      if (index < 4){
         $(`#${item.hour}`).children('.hour').append(`${index+8}AM`)
-      } else {
-        $(`#${item.hour}`).children('.hour').append(`${index+8}PM`)
+      } else if (index === 4){
+        $(`#${item.hour}`).children('.hour').append(`12PM`)
+      }
+      else {
+        $(`#${item.hour}`).children('.hour').append(`${index-4}PM`)
       }
       
       //Create text area tag
